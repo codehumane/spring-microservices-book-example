@@ -1,6 +1,8 @@
 package codehumane.legacyrest;
 
+import lombok.AllArgsConstructor;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 import lombok.Setter;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -14,13 +16,12 @@ public class HomeController {
     }
 }
 
+@Setter
+@Getter
+@NoArgsConstructor
+@AllArgsConstructor
 class Greet {
 
-    @Getter
-    @Setter
     private String message;
 
-    public Greet(String message) {
-        this.message = message;
-    }
 }
