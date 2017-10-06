@@ -35,6 +35,7 @@ dependencies {
     compile('org.springframework.data:spring-data-rest-hal-browser:2.4.0.RELEASE')
     compile('org.springframework.boot:spring-boot-starter-security:1.5.7.RELEASE')
     compile('org.springframework.security.oauth:spring-security-oauth2:2.0.9.RELEASE')
+    compile("org.springframework.boot:spring-boot-starter-amqp")
     compile('org.projectlombok:lombok:1.16.18')
     testCompile('org.springframework.boot:spring-boot-starter-test')
 }
