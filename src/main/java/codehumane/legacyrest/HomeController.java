@@ -10,10 +10,7 @@ import org.springframework.hateoas.ResourceSupport;
 import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.ResponseBody;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import static org.springframework.hateoas.mvc.ControllerLinkBuilder.linkTo;
 import static org.springframework.hateoas.mvc.ControllerLinkBuilder.methodOn;
@@ -30,6 +27,7 @@ public class HomeController {
 
     @RequestMapping("/greeting")
     @ResponseBody
+    @CrossOrigin("http://mytrustedorigin.com")
     public HttpEntity<Greet> greeting(
             @RequestParam(
                     value = "name",
@@ -44,7 +42,7 @@ public class HomeController {
     }
 
     private Greet newGreet(String name) {
-        log.info("bootrest.customproperty "+ env.getProperty("bootrest.customproperty"));
+        log.info("bootrest.customproperty " + env.getProperty("bootrest.customproperty"));
         return new Greet("Hello " + name);
     }
 
