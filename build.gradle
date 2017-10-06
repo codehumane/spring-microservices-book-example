@@ -22,9 +22,14 @@ repositories {
 	mavenCentral()
 }
 
+configurations {
+	compile.exclude module: "spring-boot-starter-tomcat"
+}
+
 dependencies {
 	compile('org.springframework.boot:spring-boot-starter-web')
 	compile('org.springframework.boot:spring-boot-starter-data-jpa')
+	compile("org.springframework.boot:spring-boot-starter-undertow:1.5.7.RELEASE")
 	compile('org.hsqldb:hsqldb')
 	compile('org.springframework.hateoas:spring-hateoas:0.23.0.RELEASE')
 	compile('org.springframework.data:spring-data-rest-hal-browser:2.4.0.RELEASE')
