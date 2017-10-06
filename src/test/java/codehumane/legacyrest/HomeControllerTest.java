@@ -9,6 +9,9 @@ import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpMethod;
 import org.springframework.security.crypto.codec.Base64;
+import org.springframework.security.oauth2.client.DefaultOAuth2ClientContext;
+import org.springframework.security.oauth2.client.OAuth2RestTemplate;
+import org.springframework.security.oauth2.client.token.grant.password.ResourceOwnerPasswordResourceDetails;
 import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.web.client.HttpClientErrorException;
 import org.springframework.web.client.RestTemplate;
@@ -23,17 +26,17 @@ public class HomeControllerTest {
     public void greeting_쿼리문자열에_입력된_값이_반환값에_포함되야_한다() {
 
         // given
-        val headers = new HttpHeaders();
-        headers.add("Authorization", generateCredential());
-        val request = new HttpEntity<String>(headers);
-        val restTemplate = new RestTemplate();
+        val resource = generateResource();
+        val entity = new HttpEntity<>(new HttpHeaders());
+        val clientContext = new DefaultOAuth2ClientContext();
+        val restTemplate = new OAuth2RestTemplate(resource, clientContext);
 
         // when
-        val greet = restTemplate
-                .exchange("http://localhost:9090/greeting?name=Gunhee", HttpMethod.GET, request, Greet.class);
+        val response = restTemplate
+                .exchange("http://localhost:9090/greeting?name=Gunhee", HttpMethod.GET, entity, Greet.class);
 
         // then
-        assertEquals("Hello Gunhee", greet.getBody().getMessage());
+        assertEquals("Hello Gunhee", response.getBody().getMessage());
     }
 
     @Test(expected = HttpClientErrorException.class)
@@ -51,7 +54,14 @@ public class HomeControllerTest {
         assertEquals(401, response.getStatusCode().value());
     }
 
-    private String generateCredential() {
-        return "Basic " + new String(Base64.encode("guest:guest123".getBytes()));
+    private ResourceOwnerPasswordResourceDetails generateResource() {
+        val resource = new ResourceOwnerPasswordResourceDetails();
+        resource.setUsername("guest");
+        resource.setPassword("guest123");
+        resource.setAccessTokenUri("http://localhost:9090/oauth/token");
+        resource.setClientId("trustedclient");
+        resource.setClientSecret("trustedclient123");
+        resource.setGrantType("password");
+        return resource;
     }
 }
