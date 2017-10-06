@@ -1,3 +1,3 @@
 rootProject.name = 'book-spring-ms-example'
 
-include 'legacyrest', 'customerprofile'
+include 'legacyrest', 'customerprofile', 'customernotification'
