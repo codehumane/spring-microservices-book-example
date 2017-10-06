@@ -47,14 +47,14 @@ public class HomeController {
         log.info("bootrest.customproperty "+ env.getProperty("bootrest.customproperty"));
         return new Greet("Hello " + name);
     }
-}
 
-@Setter
-@Getter
-@NoArgsConstructor
-@AllArgsConstructor
-class Greet extends ResourceSupport {
+    @Setter
+    @Getter
+    @NoArgsConstructor
+    @AllArgsConstructor
+    static class Greet extends ResourceSupport {
 
-    private String message;
+        private String message;
 
+    }
 }
